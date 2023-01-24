@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Fib from "./Fib";
 import Otherpage from "./Otherpage";
