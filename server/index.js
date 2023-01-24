@@ -1,5 +1,5 @@
 const keys = require("./keys");
-
+console.log("efegeg");
 //express setup
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -20,11 +20,20 @@ const pgClient = new Pool({
 });
 
 pgClient.on("connect", (client) => {
+	console.log("connected to pg");
 	client
 		.query("CREATE TABLE IF NOT EXISTS values (number INT)")
 		.catch((err) => console.error(err));
 });
 
+const connectPG = async () => {
+	try {
+		await pgClient.connect();
+		console.log("connected to pg server");
+	} catch (err) {
+		console.log(err);
+	}
+};
 //redis client setup
 const redis = require("redis");
 const redisClient = redis.createClient({
@@ -64,6 +73,7 @@ app.post("/values", async (req, res) => {
 
 	res.send({ working: true });
 });
+connectPG();
 
 app.listen(5000, (err) => {
 	console.log("Listening on port 5000");
